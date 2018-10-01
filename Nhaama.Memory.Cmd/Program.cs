@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
+using Nhaama.FFXIV;
 using Nhaama.Memory;
 using Nhaama.Memory.Serialization;
 using Nhaama.Memory.Serialization.Converters;
@@ -15,10 +16,11 @@ namespace Nhaama.Memory.Cmd
         {
             var proc = Process.GetProcessesByName("ffxiv_dx11")[0].GetNhaamaProcess();
             
+            
             Pointer p = new Pointer(proc, 0x19D55E8, 0x4c);
             Console.WriteLine(p.Address.ToString("X"));
-            Console.WriteLine(proc.ReadByte(p.Address));
-
+            Console.WriteLine(proc.ReadByte(p));
+            /*
             var serializer = proc.GetSerializer();
             
             var pointerJson = serializer.SerializeObject(p, Formatting.Indented);
@@ -42,8 +44,9 @@ namespace Nhaama.Memory.Cmd
 
 
 
-            var tp = new Pointer(proc, "ffxiv_dx11.exe+019815F0,10,8,28,80");
+            var tp = new Pointer(proc, 0x19815F0, 0x10, 0x8, 0x28, 0x80);
             Console.WriteLine(tp.Address.ToString("X"));
+            */
             
             /*
             int time = 0;
@@ -54,6 +57,10 @@ namespace Nhaama.Memory.Cmd
                 Thread.Sleep(30);
             }
             */
+            
+            FFXIV.Game xivgame = new Game(proc.BaseProcess);
+            Console.WriteLine("Version: " + xivgame.Version);
+            Console.WriteLine(FFXIV.Definitions.GetJson(proc));
         }
     }
 }
