@@ -87,5 +87,7 @@ namespace Nhaama.Memory
                     process.ReadUInt64(Address);
             }
         }
+        
+        public static implicit operator ulong(Pointer p)  {  return p.Address;  }
     }
 }
