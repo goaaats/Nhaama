@@ -29,6 +29,15 @@ namespace Nhaama.Memory.Cmd
             
             var p3 = new Pointer(proc, "ffxiv_dx11.exe+19D55E8,4C");
             Console.WriteLine(proc.ReadByte(p3.Address));
+            
+            
+            
+            
+            var p4 = new Pointer(proc, 0x199DA38 + 8, 0);
+            
+            Console.WriteLine(p4.Address.ToString("X"));
+            Console.WriteLine(proc.ReadString(p4.Address + 48));
+            proc.WriteString(p4.Address + 48, "Test McTest", StringEncodingType.Utf8, true);
         }
     }
 }

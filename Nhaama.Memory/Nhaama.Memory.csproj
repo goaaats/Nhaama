@@ -54,6 +54,7 @@
     <Compile Include="Serialization\Converters\PointerPropertyConverter.cs" />
     <Compile Include="Serialization\Converters\ProcessModulePropertyConverter.cs" />
     <Compile Include="Serialization\NhaamaSerializer.cs" />
+    <Compile Include="StringEncodingType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

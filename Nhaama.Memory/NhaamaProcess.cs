@@ -55,6 +55,30 @@ namespace Nhaama.Memory
 
         public ulong ReadUInt64(ulong offset) => BitConverter.ToUInt64(ReadBytes(offset, 8), 0);
 
+        public string ReadString(ulong offset, StringEncodingType encodingType = StringEncodingType.Utf8)
+        {
+            List<byte> bytes = new List<byte>();
+
+            do
+            {
+                bytes.Add(ReadByte(offset));
+                offset++;
+            } while (bytes[bytes.Count - 1] != 0x0);
+            
+            switch (encodingType)
+            {
+                case StringEncodingType.ASCII:
+                    return Encoding.UTF8.GetString(bytes.ToArray());
+                case StringEncodingType.Unicode:
+                    return Encoding.UTF8.GetString(bytes.ToArray());
+                case StringEncodingType.Utf8:
+                    return Encoding.UTF8.GetString(bytes.ToArray());
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(encodingType), encodingType, null);
+            }
+            
+        }
+
         #endregion
 
         #region Writers
@@ -89,34 +113,29 @@ namespace Nhaama.Memory
                 throw new ArgumentException("Unsupported type.");
         }
 
-        /// <summary>
-        /// Write a string in UTF-8 Format to the specified offset.
-        /// </summary>
-        /// <param name="offset">Offset to write to.</param>
-        /// <param name="data">Value to write.</param>
-        public void WriteStringUTF8(ulong offset, string data)
+        public void WriteString(ulong offset, string data, StringEncodingType encodingType = StringEncodingType.Utf8,
+            bool zeroTerminated = true)
         {
-            WriteBytes(offset, Encoding.UTF8.GetBytes(data));
-        }
-        
-        /// <summary>
-        /// Write a string in ASCII Format to the specified offset.
-        /// </summary>
-        /// <param name="offset">Offset to write to.</param>
-        /// <param name="data">Value to write.</param>
-        public void WriteStringAscii(ulong offset, string data)
-        {
-            WriteBytes(offset, Encoding.ASCII.GetBytes(data));
-        }
-        
-        /// <summary>
-        /// Write a string in Unicode Format to the specified offset.
-        /// </summary>
-        /// <param name="offset">Offset to write to.</param>
-        /// <param name="data">Value to write.</param>
-        public void WriteStringUnicode(ulong offset, string data)
-        {
-            WriteBytes(offset, Encoding.Unicode.GetBytes(data));
+            if (zeroTerminated)
+                data += "\0";
+            
+            byte[] stringBytes;
+            switch (encodingType)
+            {
+                case StringEncodingType.ASCII:
+                    stringBytes = Encoding.ASCII.GetBytes(data);
+                    break;
+                case StringEncodingType.Unicode:
+                    stringBytes = Encoding.Unicode.GetBytes(data);
+                    break;
+                case StringEncodingType.Utf8:
+                    stringBytes = Encoding.UTF8.GetBytes(data);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(encodingType), encodingType, null);
+            }
+            
+            WriteBytes(offset, stringBytes);
         }
 
         /// <summary>
