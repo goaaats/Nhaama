@@ -33,7 +33,7 @@ namespace Nhaama.Memory
         /// </summary>
         /// <param name="offset">Offset to read from.</param>
         /// <returns></returns>
-        public byte ReadByte(UIntPtr offset)
+        public byte ReadByte(ulong offset)
         {
             return ReadBytes(offset, 1)[0];
         }
@@ -44,16 +44,16 @@ namespace Nhaama.Memory
         /// <param name="offset">Offset to read from.</param>
         /// <param name="length">Length to read.</param>
         /// <returns></returns>
-        public byte[] ReadBytes(UIntPtr offset, uint length)
+        public byte[] ReadBytes(ulong offset, uint length)
         {
             var bytes = new byte[length];
             Kernel32.ReadProcessMemory(BaseProcess.Handle,
-                offset, bytes, new UIntPtr(length), IntPtr.Zero);
+                new UIntPtr(offset), bytes, new UIntPtr(length), IntPtr.Zero);
 
             return bytes;
         }
 
-        public UInt64 ReadUInt64(UIntPtr offset) => BitConverter.ToUInt64(ReadBytes(offset, 8), 0);
+        public ulong ReadUInt64(ulong offset) => BitConverter.ToUInt64(ReadBytes(offset, 8), 0);
 
         #endregion
 
@@ -65,7 +65,7 @@ namespace Nhaama.Memory
         /// <param name="offset">Offset to write to.</param>
         /// <param name="data">Value to write.</param>
         /// <exception cref="ArgumentException">Gets thrown, when the type to write is unsupported.</exception>
-        public void Write(UIntPtr offset, object data)
+        public void Write(ulong offset, object data)
         {
             var @writeMethods = new Dictionary<Type, Action>
             {
@@ -94,7 +94,7 @@ namespace Nhaama.Memory
         /// </summary>
         /// <param name="offset">Offset to write to.</param>
         /// <param name="data">Value to write.</param>
-        public void WriteStringUTF8(UIntPtr offset, string data)
+        public void WriteStringUTF8(ulong offset, string data)
         {
             WriteBytes(offset, Encoding.UTF8.GetBytes(data));
         }
@@ -104,7 +104,7 @@ namespace Nhaama.Memory
         /// </summary>
         /// <param name="offset">Offset to write to.</param>
         /// <param name="data">Value to write.</param>
-        public void WriteStringAscii(UIntPtr offset, string data)
+        public void WriteStringAscii(ulong offset, string data)
         {
             WriteBytes(offset, Encoding.ASCII.GetBytes(data));
         }
@@ -114,7 +114,7 @@ namespace Nhaama.Memory
         /// </summary>
         /// <param name="offset">Offset to write to.</param>
         /// <param name="data">Value to write.</param>
-        public void WriteStringUnicode(UIntPtr offset, string data)
+        public void WriteStringUnicode(ulong offset, string data)
         {
             WriteBytes(offset, Encoding.Unicode.GetBytes(data));
         }
@@ -124,9 +124,9 @@ namespace Nhaama.Memory
         /// </summary>
         /// <param name="offset">Offset to write to.</param>
         /// <param name="data">Value to write.</param>
-        public void WriteBytes(UIntPtr offset, byte[] data)
+        public void WriteBytes(ulong offset, byte[] data)
         {
-            Kernel32.WriteProcessMemory(BaseProcess.Handle, offset, data, new UIntPtr((uint) data.Length), IntPtr.Zero);
+            Kernel32.WriteProcessMemory(BaseProcess.Handle, new UIntPtr(offset), data, new UIntPtr((uint) data.Length), IntPtr.Zero);
         }
 
         #endregion

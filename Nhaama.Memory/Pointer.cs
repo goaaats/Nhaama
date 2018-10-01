@@ -11,9 +11,9 @@ namespace Nhaama.Memory
     [JsonObject(MemberSerialization.OptIn)]
     public unsafe class Pointer
     {
-        public UIntPtr Address = UIntPtr.Zero;
+        public ulong Address = 0;
 
-        [JsonProperty] public readonly int[] PointerPath;
+        [JsonProperty] public readonly ulong[] PointerPath;
         [JsonProperty] public readonly ProcessModule Module;
 
         [JsonConstructor]
@@ -26,7 +26,7 @@ namespace Nhaama.Memory
         /// </summary>
         /// <param name="process">The Process to act on.</param>
         /// <param name="pointerPath">The offsets needed to resolve the pointer.</param>
-        public Pointer(NhaamaProcess process, params int[] pointerPath) : this(process,
+        public Pointer(NhaamaProcess process, params ulong[] pointerPath) : this(process,
             process.BaseProcess.MainModule, pointerPath)
         {
         }
@@ -37,10 +37,10 @@ namespace Nhaama.Memory
             Module = process.BaseProcess.Modules.Cast<ProcessModule>().First(x => x.ModuleName == parts[0]);
 
             var path = parts[1].Split(',');
-            PointerPath = new int[path.Length];
+            PointerPath = new ulong[path.Length];
             for (int i = 0; i < path.Length; i++)
             {
-                PointerPath[i] = int.Parse(path[i], NumberStyles.HexNumber);
+                PointerPath[i] = ulong.Parse(path[i], NumberStyles.HexNumber);
             }
             
             Resolve(process);
@@ -54,7 +54,7 @@ namespace Nhaama.Memory
         /// <param name="pointerPath">The offsets needed to resolve the pointer.</param>
         /// <exception cref="ArgumentNullException">Gets thrown when the pointer path is null.</exception>
         /// <exception cref="ArgumentException">Gets thrown when the pointer path is empty.</exception>
-        public Pointer(NhaamaProcess process, ProcessModule module, params int[] pointerPath)
+        public Pointer(NhaamaProcess process, ProcessModule module, params ulong[] pointerPath)
         {
             if (pointerPath == null)
                 throw new ArgumentNullException("Pointer path must not be null.");
@@ -75,18 +75,17 @@ namespace Nhaama.Memory
         public void Resolve(NhaamaProcess process)
         {
             var currentAddress =
-                process.ReadUInt64((UIntPtr) IntPtr.Add(Module.BaseAddress, PointerPath[0]).ToPointer());
-            var ptrAddress = (UIntPtr) 0;
+                process.ReadUInt64((ulong) Module.BaseAddress + PointerPath[0]);
+
+            Address = 0;
 
             for (int i = 1; i < PointerPath.Length; i++)
             {
-                ptrAddress = new UIntPtr(currentAddress + (uint) PointerPath[i]);
+                Address = currentAddress + PointerPath[i];
 
                 currentAddress =
-                    process.ReadUInt64(new UIntPtr(currentAddress));
+                    process.ReadUInt64(currentAddress);
             }
-
-            Address = ptrAddress;
         }
     }
 }

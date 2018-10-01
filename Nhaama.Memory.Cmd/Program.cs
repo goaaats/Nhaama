@@ -15,7 +15,7 @@ namespace Nhaama.Memory.Cmd
             var proc = Process.GetProcessesByName("ffxiv_dx11")[0].GetNhaamaProcess();
             
             Pointer p = new Pointer(proc, 0x19D55E8, 0x4c);
-            Console.WriteLine(p.Address.ToUInt64().ToString("X"));
+            Console.WriteLine(p.Address.ToString("X"));
             Console.WriteLine(proc.ReadByte(p.Address));
 
             var serializer = proc.GetSerializer();
@@ -25,7 +25,7 @@ namespace Nhaama.Memory.Cmd
             
             var p2 = serializer.DeserializeObject<Memory.Pointer>(pointerJson);
             
-            Console.WriteLine(p2.Address.ToUInt64().ToString("X"));
+            Console.WriteLine(p2.Address.ToString("X"));
             
             var p3 = new Pointer(proc, "ffxiv_dx11.exe+19D55E8,4C");
             Console.WriteLine(proc.ReadByte(p3.Address));
