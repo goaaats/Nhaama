@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using Newtonsoft.Json;
 using Nhaama.Memory;
 using Nhaama.Memory.Serialization;
@@ -38,6 +39,21 @@ namespace Nhaama.Memory.Cmd
             Console.WriteLine(p4.Address.ToString("X"));
             Console.WriteLine(proc.ReadString(p4.Address + 48));
             proc.WriteString(p4.Address + 48, "Test McTest", StringEncodingType.Utf8, true);
+
+
+
+            var tp = new Pointer(proc, "ffxiv_dx11.exe+019815F0,10,8,28,80");
+            Console.WriteLine(tp.Address.ToString("X"));
+            
+            /*
+            int time = 0;
+            while (true)
+            {
+                proc.Write(p4.Address, (UInt32) time);
+                time++;
+                Thread.Sleep(30);
+            }
+            */
         }
     }
 }

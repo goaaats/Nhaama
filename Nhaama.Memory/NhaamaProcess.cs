@@ -43,7 +43,7 @@ namespace Nhaama.Memory
         /// </summary>
         /// <param name="offset">Offset to read from.</param>
         /// <param name="length">Length to read.</param>
-        /// <returns></returns>
+        /// <returns>Read byte array.</returns>
         public byte[] ReadBytes(ulong offset, uint length)
         {
             var bytes = new byte[length];
@@ -53,11 +53,23 @@ namespace Nhaama.Memory
             return bytes;
         }
 
+        /// <summary>
+        /// Read a UInt64 from the specified offset.
+        /// </summary>
+        /// <param name="offset">Offset to read from.</param>
+        /// <returns>Read UInt64.</returns>
         public ulong ReadUInt64(ulong offset) => BitConverter.ToUInt64(ReadBytes(offset, 8), 0);
 
+        /// <summary>
+        /// Read a string from the specified offset.
+        /// </summary>
+        /// <param name="offset">Offset to read from.</param>
+        /// <param name="encodingType">Encoding, default: UTF-8</param>
+        /// <returns>Read string.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Gets thrown when an unknown string encoding is provided.</exception>
         public string ReadString(ulong offset, StringEncodingType encodingType = StringEncodingType.Utf8)
         {
-            List<byte> bytes = new List<byte>();
+            var bytes = new List<byte>();
 
             do
             {
@@ -113,6 +125,14 @@ namespace Nhaama.Memory
                 throw new ArgumentException("Unsupported type.");
         }
 
+        /// <summary>
+        /// Write a string to the specified offset.
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <param name="data"></param>
+        /// <param name="encodingType"></param>
+        /// <param name="zeroTerminated"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void WriteString(ulong offset, string data, StringEncodingType encodingType = StringEncodingType.Utf8,
             bool zeroTerminated = true)
         {

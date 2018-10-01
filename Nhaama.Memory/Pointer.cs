@@ -84,7 +84,7 @@ namespace Nhaama.Memory
                 Address = currentAddress + PointerPath[i];
 
                 currentAddress =
-                    process.ReadUInt64(currentAddress);
+                    process.ReadUInt64(Address);
             }
         }
     }
