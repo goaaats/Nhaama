@@ -44,7 +44,8 @@
   <ItemGroup>
     <Compile Include="Definitions.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Model\Actor\Actor.cs" />
+    <Compile Include="Model\Actor\ActorEntry.cs" />
+    <Compile Include="Model\Actor\ActorAppearance.cs" />
     <Compile Include="Model\Actor\ObjectKind.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

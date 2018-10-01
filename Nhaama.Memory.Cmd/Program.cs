@@ -52,15 +52,15 @@ namespace Nhaama.Memory.Cmd
             int time = 0;
             while (true)
             {
-                proc.Write(p4.Address, (UInt32) time);
+                proc.Write(p4, (UInt32) time);
                 time++;
                 Thread.Sleep(30);
             }
             */
             
+            Console.WriteLine(Definitions.GetJson(proc));
             FFXIV.Game xivgame = new Game(proc.BaseProcess);
             Console.WriteLine("Version: " + xivgame.Version);
-            Console.WriteLine(FFXIV.Definitions.GetJson(proc));
         }
     }
 }

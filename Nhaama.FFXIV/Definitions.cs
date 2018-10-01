@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Security.Policy;
+using Newtonsoft.Json;
 using Nhaama.Memory;
 
 namespace Nhaama.FFXIV
@@ -9,16 +10,19 @@ namespace Nhaama.FFXIV
     {
         private Definitions(NhaamaProcess process)
         {
-            ActorTable = new Pointer(process, 0x199DA38);
             TerritoryType = new Pointer(process, 0x19D55E8, 0x4C);
             Time = new Pointer(process, 0x19815F0, 0x10, 0x8, 0x28, 0x80);
             Weather = new Pointer(process, 0x19579A8, 0x27);
         }
+        
+        [JsonConstructor]
+        private Definitions() {}
 
-        public Pointer ActorTable;
         public Pointer TerritoryType;
         public Pointer Time;
         public Pointer Weather;
+
+        public int ActorTable = 0x199DA38;
 
         public int ActorID = 0x74;
         public int Name = 0x30;
@@ -47,18 +51,26 @@ namespace Nhaama.FFXIV
         public int MainWep = 0x1342;
         public int OffWep = 0x13A8;
         
-        private static readonly Uri DefinitionStoreUrl = new Uri("https://raw.githubusercontent.com/goaaats/Nhaama/master/definitions/FFXIV");
+        private static readonly Uri DefinitionStoreUrl = new Uri("https://raw.githubusercontent.com/goaaats/Nhaama/master/definitions/FFXIV/");
         
-        public static Definitions Get(NhaamaProcess p, string version)
+        public static Definitions Get(NhaamaProcess p, string version, Game.GameType gameType)
         {
             using (WebClient client = new WebClient())
             {
-                var definitionJson = client.DownloadString(new Uri(DefinitionStoreUrl, $"{version}.json"));
-                
-                var serializer = p.GetSerializer();
-                var deserializedDefinition = serializer.DeserializeObject<Definitions>(definitionJson);
+                var uri = new Uri(DefinitionStoreUrl, $"{gameType.ToString().ToLower()}/{version}.json");
 
-                return deserializedDefinition;
+                try
+                {
+                    var definitionJson = client.DownloadString(uri);
+                    var serializer = p.GetSerializer();
+                    var deserializedDefinition = serializer.DeserializeObject<Definitions>(definitionJson);
+
+                    return deserializedDefinition;
+                }
+                catch (WebException exc)
+                {
+                    throw new Exception("Could not get definitions for version: " + uri, exc);
+                }
             }
         }
 

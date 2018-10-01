@@ -1,6 +1,6 @@
 namespace Nhaama.FFXIV.Model.Actor
 {
-    public enum ObjectKind
+    public enum ObjectKind : byte
     {
         None = 0x00,
         Player = 0x01,

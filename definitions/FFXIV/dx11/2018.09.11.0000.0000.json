@@ -1,12 +1,4 @@
 {
-  "ActorTable": {
-    "PointerPath": [
-      26860088
-    ],
-    "Module": {
-      "ModuleName": "ffxiv_dx11.exe"
-    }
-  },
   "TerritoryType": {
     "PointerPath": [
       27088360,
@@ -37,6 +29,7 @@
       "ModuleName": "ffxiv_dx11.exe"
     }
   },
+  "ActorTable": 26860088,
   "ActorID": 116,
   "Name": 48,
   "BnpcBase": 128,
