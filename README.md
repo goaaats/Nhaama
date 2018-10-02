@@ -31,5 +31,5 @@ Console.WriteLine(pointer2.Address.ToString("X"));
 You can read values by calling a ``Read`` function of the wanted type on a ``NhaamaProcess``, passing the offset to read from.
 
 ```cs
-Console.WriteLine(process1.ReadUInt64(pointer1.Address));
+Console.WriteLine(process1.ReadUInt64(pointer1));
 ```
