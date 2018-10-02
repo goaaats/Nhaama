@@ -60,12 +60,13 @@ namespace Nhaama.Memory.Cmd
                 Thread.Sleep(30);
             }
             */
+            
+            //Console.WriteLine(Definitions.GetJson(proc));
 
             FFXIV.Game xivgame = new Game(proc.BaseProcess);
-            Console.WriteLine("Version: " + xivgame.Version);
             xivgame.Update();
             
-            foreach (var actorEntry in xivgame.ActorTable.Cast<ActorEntry>())
+            foreach (var actorEntry in xivgame.ActorTable.Cast<ActorEntry>().Where(x=> x.ObjectKind == ObjectKind.BattleNpc && x.SubKind == 5))
             {
                 Console.WriteLine(actorEntry);
             }

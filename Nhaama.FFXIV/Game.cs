@@ -35,6 +35,9 @@ namespace Nhaama.FFXIV
             ActorTable = new ActorTableCollection(this);
         }
 
+        /// <summary>
+        /// Update game data.
+        /// </summary>
         public void Update()
         {
             ActorTable.Update();
