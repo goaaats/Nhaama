@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using Newtonsoft.Json;
 using Nhaama.FFXIV;
+using Nhaama.FFXIV.Actor.Model;
 using Nhaama.Memory;
 using Nhaama.Memory.Serialization;
 using Nhaama.Memory.Serialization.Converters;
@@ -16,11 +18,12 @@ namespace Nhaama.Memory.Cmd
         {
             var proc = Process.GetProcessesByName("ffxiv_dx11")[0].GetNhaamaProcess();
 
+            /*
 
             Pointer p = new Pointer(proc, 0x19D55E8, 0x4c);
             Console.WriteLine(p.Address.ToString("X"));
             Console.WriteLine(proc.ReadByte(p));
-            /*
+            
             var serializer = proc.GetSerializer();
             
             var pointerJson = serializer.SerializeObject(p, Formatting.Indented);
@@ -31,7 +34,7 @@ namespace Nhaama.Memory.Cmd
             Console.WriteLine(p2.Address.ToString("X"));
             
             var p3 = new Pointer(proc, "ffxiv_dx11.exe+19D55E8,4C");
-            Console.WriteLine(proc.ReadByte(p3.Address));
+            Console.WriteLine(proc.ReadByte(p3));
             
             
             
@@ -39,14 +42,14 @@ namespace Nhaama.Memory.Cmd
             var p4 = new Pointer(proc, 0x199DA38 + 8, 0);
             
             Console.WriteLine(p4.Address.ToString("X"));
-            Console.WriteLine(proc.ReadString(p4.Address + 48));
+            Console.WriteLine(proc.ReadString(p4 + 48));
             proc.WriteString(p4.Address + 48, "Test McTest", StringEncodingType.Utf8, true);
 
 
 
             var tp = new Pointer(proc, 0x19815F0, 0x10, 0x8, 0x28, 0x80);
             Console.WriteLine(tp.Address.ToString("X"));
-            */
+            
 
             /*
             int time = 0;
@@ -58,10 +61,14 @@ namespace Nhaama.Memory.Cmd
             }
             */
 
-            Console.WriteLine(Definitions.GetJson(proc));
             FFXIV.Game xivgame = new Game(proc.BaseProcess);
             Console.WriteLine("Version: " + xivgame.Version);
             xivgame.Update();
+            
+            foreach (var actorEntry in xivgame.ActorTable.Cast<ActorEntry>())
+            {
+                Console.WriteLine(actorEntry);
+            }
         }
     }
 }

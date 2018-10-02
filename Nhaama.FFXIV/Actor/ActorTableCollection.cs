@@ -18,26 +18,48 @@ namespace Nhaama.FFXIV.Actor
 
         public void Update()
         {
-            var numEntries = _game.Process.ReadUInt32(_game.Definitions.ActorTable);
+            var numEntries =
+                _game.Process.ReadUInt64(
+                    _game.Process.GetModuleBasedOffset("ffxiv_dx11.exe", _game.Definitions.ActorTable));
 
             _currentEntries = new ActorEntry[numEntries];
 
-            for (int i = 0; i < numEntries; i++)
+            for (ulong i = 0; i < numEntries; i++)
             {
-                ulong offset = 8 + (numEntries * 8);
+                ulong offset = 8 + (i * 8);
 
                 var address = new Pointer(_game.Process, _game.Definitions.ActorTable + offset, 0);
 
-                Console.WriteLine(_game.Process.ReadString(address + 48));
+                _currentEntries[i] = new ActorEntry
+                {
+                    Offset = address,
+                    ActorID = _game.Process.ReadUInt32(address + _game.Definitions.ActorID),
+                    Name = _game.Process.ReadString(address + _game.Definitions.Name),
+                    BnpcBase = _game.Process.ReadUInt32(address + _game.Definitions.BnpcBase),
+                    OwnerID = _game.Process.ReadUInt32(address + _game.Definitions.OwnerID),
+                    ModelChara = _game.Process.ReadUInt16(address + _game.Definitions.ModelChara),
+                    Job = _game.Process.ReadByte(address + _game.Definitions.Job),
+                    Level = _game.Process.ReadByte(address + _game.Definitions.Level),
+                    World = _game.Process.ReadByte(address + _game.Definitions.World),
+                    CompanyTag = _game.Process.ReadString(address + _game.Definitions.CompanyTag).RemoveWhitespace(),
+                    ObjectKind = (ObjectKind) _game.Process.ReadByte(address + _game.Definitions.ObjectKind),
+
+                    Appearance = new ActorAppearance()
+                    {
+                        Customize = _game.Process.ReadBytes(address + _game.Definitions.Customize, 26),
+                    }
+                };
             }
         }
+        
+        public ActorEntry this[int i] => _currentEntries[i];
 
         public IEnumerator GetEnumerator()
         {
-            return new ActorTableEnumerator(_currentEntries);
+            return _currentEntries.GetEnumerator();
         }
 
-        int ICollection.Count => _currentEntries.Length;
+        int ICollection.Count => _currentEntries?.Length ?? 0;
 
         void ICollection.CopyTo(Array array, int index)
         {

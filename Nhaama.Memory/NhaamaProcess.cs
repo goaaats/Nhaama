@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using Nhaama.Memory.Native;
 using Nhaama.Memory.Serialization;
@@ -66,6 +67,13 @@ namespace Nhaama.Memory
         /// <param name="offset">Offset to read from.</param>
         /// <returns>Read UInt32.</returns>
         public uint ReadUInt32(ulong offset) => BitConverter.ToUInt32(ReadBytes(offset, 4), 0);
+        
+        /// <summary>
+        /// Read a UInt16 from the specified offset.
+        /// </summary>
+        /// <param name="offset">Offset to read from.</param>
+        /// <returns>Read UInt16.</returns>
+        public ushort ReadUInt16(ulong offset) => BitConverter.ToUInt16(ReadBytes(offset, 2), 0);
 
         /// <summary>
         /// Read a string from the specified offset.
@@ -83,6 +91,8 @@ namespace Nhaama.Memory
                 bytes.Add(ReadByte(offset));
                 offset++;
             } while (bytes[bytes.Count - 1] != 0x0);
+
+            bytes = bytes.Take(bytes.Count - 1).ToList();
             
             switch (encodingType)
             {
@@ -194,6 +204,9 @@ namespace Nhaama.Memory
         /// </summary>
         /// <returns>Serializer.</returns>
         public NhaamaSerializer GetSerializer() => new NhaamaSerializer(this);
+
+        public ulong GetModuleBasedOffset(string moduleName, ulong offset) =>
+            (ulong)BaseProcess.Modules.Cast<ProcessModule>().First(x => x.ModuleName == moduleName).BaseAddress.ToInt64() + offset;
 
         #endregion
     }
