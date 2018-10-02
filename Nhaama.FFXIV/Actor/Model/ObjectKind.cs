@@ -1,4 +1,4 @@
-namespace Nhaama.FFXIV.Model.Actor
+namespace Nhaama.FFXIV.Actor.Model
 {
     public enum ObjectKind : byte
     {

@@ -1,7 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using Nhaama.FFXIV.Model.Actor;
+using System.Linq;
+using Nhaama.FFXIV.Actor;
 using Nhaama.Memory;
 
 namespace Nhaama.FFXIV
@@ -16,28 +17,27 @@ namespace Nhaama.FFXIV
 
         public readonly GameType Type;
         public readonly string Version;
+        public readonly NhaamaProcess Process;
+        public readonly Definitions Definitions;
 
-        private NhaamaProcess _process;
-        private Definitions _definitions;
+        public readonly ActorTableCollection ActorTable;
 
         public Game(Process process)
         {
             Type = process.MainModule.ModuleName.Contains("ffxiv_dx11") ? GameType.Dx11 : GameType.Dx9;
-            _process = process.GetNhaamaProcess();
+            Process = process.GetNhaamaProcess();
 
             var gameDirectory = new DirectoryInfo(process.MainModule.FileName);
             Version = File.ReadAllText(Path.Combine(gameDirectory.Parent.FullName, "ffxivgame.ver"));
             
-            _definitions = Definitions.Get(_process, Version, Type);
+            Definitions = Definitions.Get(Process, Version, Type);
+            
+            ActorTable = new ActorTableCollection(this);
         }
 
-        #region Actors
-
-        public ActorEntry[] GetLoadedActors()
+        public void Update()
         {
-            throw new NotImplementedException();
+            ActorTable.Update();
         }
-
-        #endregion
     }
 }

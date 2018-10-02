@@ -59,6 +59,13 @@ namespace Nhaama.Memory
         /// <param name="offset">Offset to read from.</param>
         /// <returns>Read UInt64.</returns>
         public ulong ReadUInt64(ulong offset) => BitConverter.ToUInt64(ReadBytes(offset, 8), 0);
+        
+        /// <summary>
+        /// Read a UInt32 from the specified offset.
+        /// </summary>
+        /// <param name="offset">Offset to read from.</param>
+        /// <returns>Read UInt32.</returns>
+        public uint ReadUInt32(ulong offset) => BitConverter.ToUInt32(ReadBytes(offset, 4), 0);
 
         /// <summary>
         /// Read a string from the specified offset.

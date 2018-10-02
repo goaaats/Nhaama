@@ -22,34 +22,34 @@ namespace Nhaama.FFXIV
         public Pointer Time;
         public Pointer Weather;
 
-        public int ActorTable = 0x199DA38;
+        public ulong ActorTable = 0x199DA38;
 
-        public int ActorID = 0x74;
-        public int Name = 0x30;
-        public int BnpcBase = 0x80;
-        public int OwnerID = 0x84;
-        public int ModelChara = 0x16FC;
-        public int Job = 0x1788;
-        public int Level = 0x178A;
-        public int World = 0x1744;
-        public int CompanyTag = 0x16A2;
-        public int Customize = 0x1688;
-        public int RenderMode = 0x104;
-        public int ObjectKind = 0x8C;
+        public ulong ActorID = 0x74;
+        public ulong Name = 0x30;
+        public ulong BnpcBase = 0x80;
+        public ulong OwnerID = 0x84;
+        public ulong ModelChara = 0x16FC;
+        public ulong Job = 0x1788;
+        public ulong Level = 0x178A;
+        public ulong World = 0x1744;
+        public ulong CompanyTag = 0x16A2;
+        public ulong Customize = 0x1688;
+        public ulong RenderMode = 0x104;
+        public ulong ObjectKind = 0x8C;
 
-        public int Head = 0x15E8;
-        public int Body = 0x15EC;
-        public int Hands = 0x15F0;
-        public int Legs = 0x15F4;
-        public int Feet = 0x15F8;
-        public int Ear = 0x15FC;
-        public int Neck = 0x1600;
-        public int Wrist = 0x1604;
-        public int RRing = 0x1608;
-        public int LRing = 0x160C;
+        public ulong Head = 0x15E8;
+        public ulong Body = 0x15EC;
+        public ulong Hands = 0x15F0;
+        public ulong Legs = 0x15F4;
+        public ulong Feet = 0x15F8;
+        public ulong Ear = 0x15FC;
+        public ulong Neck = 0x1600;
+        public ulong Wrist = 0x1604;
+        public ulong RRing = 0x1608;
+        public ulong LRing = 0x160C;
 
-        public int MainWep = 0x1342;
-        public int OffWep = 0x13A8;
+        public ulong MainWep = 0x1342;
+        public ulong OffWep = 0x13A8;
         
         private static readonly Uri DefinitionStoreUrl = new Uri("https://raw.githubusercontent.com/goaaats/Nhaama/master/definitions/FFXIV/");
         

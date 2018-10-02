@@ -42,11 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actor\ActorTableCollection.cs" />
+    <Compile Include="Actor\ActorTableEnumerator.cs" />
+    <Compile Include="Actor\Model\ActorAppearance.cs" />
+    <Compile Include="Actor\Model\ActorEntry.cs" />
+    <Compile Include="Actor\Model\ObjectKind.cs" />
     <Compile Include="Definitions.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Model\Actor\ActorEntry.cs" />
-    <Compile Include="Model\Actor\ActorAppearance.cs" />
-    <Compile Include="Model\Actor\ObjectKind.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 using GearTuple = System.Tuple<int, int, int>;
 
-namespace Nhaama.FFXIV.Model.Actor
+namespace Nhaama.FFXIV.Actor.Model
 {
     public struct ActorAppearance
     {

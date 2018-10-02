@@ -15,8 +15,8 @@ namespace Nhaama.Memory.Cmd
         public static void Main(string[] args)
         {
             var proc = Process.GetProcessesByName("ffxiv_dx11")[0].GetNhaamaProcess();
-            
-            
+
+
             Pointer p = new Pointer(proc, 0x19D55E8, 0x4c);
             Console.WriteLine(p.Address.ToString("X"));
             Console.WriteLine(proc.ReadByte(p));
@@ -47,7 +47,7 @@ namespace Nhaama.Memory.Cmd
             var tp = new Pointer(proc, 0x19815F0, 0x10, 0x8, 0x28, 0x80);
             Console.WriteLine(tp.Address.ToString("X"));
             */
-            
+
             /*
             int time = 0;
             while (true)
@@ -57,10 +57,11 @@ namespace Nhaama.Memory.Cmd
                 Thread.Sleep(30);
             }
             */
-            
+
             Console.WriteLine(Definitions.GetJson(proc));
             FFXIV.Game xivgame = new Game(proc.BaseProcess);
             Console.WriteLine("Version: " + xivgame.Version);
+            xivgame.Update();
         }
     }
 }
