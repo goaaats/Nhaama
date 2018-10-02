@@ -35,7 +35,7 @@ namespace Nhaama.FFXIV.Actor
                     Offset = address,
                     ActorID = _game.Process.ReadUInt32(address + _game.Definitions.ActorID),
                     Name = _game.Process.ReadString(address + _game.Definitions.Name),
-                    BnpcBase = _game.Process.ReadUInt32(address + _game.Definitions.BnpcBase),
+                    DataId = _game.Process.ReadUInt32(address + _game.Definitions.BnpcBase),
                     OwnerID = _game.Process.ReadUInt32(address + _game.Definitions.OwnerID),
                     ModelChara = _game.Process.ReadUInt16(address + _game.Definitions.ModelChara),
                     Job = _game.Process.ReadByte(address + _game.Definitions.Job),
@@ -43,6 +43,7 @@ namespace Nhaama.FFXIV.Actor
                     World = _game.Process.ReadByte(address + _game.Definitions.World),
                     CompanyTag = _game.Process.ReadString(address + _game.Definitions.CompanyTag).RemoveWhitespace(),
                     ObjectKind = (ObjectKind) _game.Process.ReadByte(address + _game.Definitions.ObjectKind),
+                    SubKind = _game.Process.ReadByte(address + _game.Definitions.SubKind),
 
                     Appearance = new ActorAppearance()
                     {

@@ -36,6 +36,7 @@ namespace Nhaama.FFXIV
         public ulong Customize = 0x1688;
         public ulong RenderMode = 0x104;
         public ulong ObjectKind = 0x8C;
+        public ulong SubKind = 0x8D;
 
         public ulong Head = 0x15E8;
         public ulong Body = 0x15EC;
