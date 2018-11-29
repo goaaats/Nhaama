@@ -55,6 +55,8 @@ namespace Nhaama.FFXIV.Actor
         
         public ActorEntry this[int i] => _currentEntries[i];
 
+        public int Length => _currentEntries.Length;
+
         public IEnumerator GetEnumerator()
         {
             return _currentEntries.GetEnumerator();

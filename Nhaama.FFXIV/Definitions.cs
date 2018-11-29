@@ -8,9 +8,9 @@ namespace Nhaama.FFXIV
 {
     public class Definitions
     {
-        private Definitions(NhaamaProcess process)
+        public Definitions(NhaamaProcess process)
         {
-            TerritoryType = new Pointer(process, 0x19D55E8, 0x4C);
+            TerritoryType = new Pointer(process, 0x19E2A48, 0x4C);
             Time = new Pointer(process, 0x19815F0, 0x10, 0x8, 0x28, 0x80);
             Weather = new Pointer(process, 0x19579A8, 0x27);
         }
@@ -22,7 +22,7 @@ namespace Nhaama.FFXIV
         public Pointer Time;
         public Pointer Weather;
 
-        public ulong ActorTable = 0x199DA38;
+        public ulong ActorTable = 0x19A6AB8;
 
         public ulong ActorID = 0x74;
         public ulong Name = 0x30;

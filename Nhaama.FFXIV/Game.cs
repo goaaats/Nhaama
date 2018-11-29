@@ -22,6 +22,8 @@ namespace Nhaama.FFXIV
 
         public readonly ActorTableCollection ActorTable;
 
+        public int TerritoryType { get; private set; }
+
         public Game(Process process)
         {
             Type = process.MainModule.ModuleName.Contains("ffxiv_dx11") ? GameType.Dx11 : GameType.Dx9;
@@ -30,7 +32,11 @@ namespace Nhaama.FFXIV
             var gameDirectory = new DirectoryInfo(process.MainModule.FileName);
             Version = File.ReadAllText(Path.Combine(gameDirectory.Parent.FullName, "ffxivgame.ver"));
             
+            #if !DEBUG
             Definitions = Definitions.Get(Process, Version, Type);
+            #else
+            Definitions = new Definitions(Process);
+            #endif
             
             ActorTable = new ActorTableCollection(this);
         }
@@ -41,6 +47,8 @@ namespace Nhaama.FFXIV
         public void Update()
         {
             ActorTable.Update();
+
+            TerritoryType = Process.ReadUInt16(Definitions.TerritoryType);
         }
     }
 }
