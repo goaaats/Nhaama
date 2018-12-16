@@ -48,6 +48,7 @@ namespace Nhaama.FFXIV
         {
             ActorTable.Update();
 
+            Definitions.TerritoryType.Resolve(Process);
             TerritoryType = Process.ReadUInt16(Definitions.TerritoryType);
         }
     }
