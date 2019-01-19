@@ -10,7 +10,7 @@ namespace Nhaama.FFXIV
     {
         public Definitions(NhaamaProcess process)
         {
-            TerritoryType = new Pointer(process, 0x19E2A48, 0x4C);
+            TerritoryType = new Pointer(process, 0x01AE4A88, 0x5A8);
             Time = new Pointer(process, 0x19815F0, 0x10, 0x8, 0x28, 0x80);
             Weather = new Pointer(process, 0x19579A8, 0x27);
         }
@@ -22,17 +22,17 @@ namespace Nhaama.FFXIV
         public Pointer Time;
         public Pointer Weather;
 
-        public ulong ActorTable = 0x19A6AB8;
+        public ulong ActorTable = 0x1AA87B8;
 
         public ulong ActorID = 0x74;
         public ulong Name = 0x30;
         public ulong BnpcBase = 0x80;
         public ulong OwnerID = 0x84;
         public ulong ModelChara = 0x16FC;
-        public ulong Job = 0x1788;
-        public ulong Level = 0x178A;
-        public ulong World = 0x1744;
-        public ulong CompanyTag = 0x16A2;
+        public ulong Job = 0x1790;
+        public ulong Level = 0x1792;
+        public ulong World = 0x174C;
+        public ulong CompanyTag = 0x16AA;
         public ulong Customize = 0x1688;
         public ulong RenderMode = 0x104;
         public ulong ObjectKind = 0x8C;
