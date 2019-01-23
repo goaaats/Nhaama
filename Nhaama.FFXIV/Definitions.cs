@@ -13,11 +13,13 @@ namespace Nhaama.FFXIV
             TerritoryType = new Pointer(process, 0x01AE4A88, 0x5A8);
             Time = new Pointer(process, 0x19815F0, 0x10, 0x8, 0x28, 0x80);
             Weather = new Pointer(process, 0x19579A8, 0x27);
+			MapID = new Pointer(process, 0x01AE4A88, 0x5C4);
         }
         
         [JsonConstructor]
         private Definitions() {}
 
+		public Pointer MapID;
         public Pointer TerritoryType;
         public Pointer Time;
         public Pointer Weather;
