@@ -75,6 +75,13 @@ namespace Nhaama.Memory
         /// <returns>Read UInt16.</returns>
         public ushort ReadUInt16(ulong offset) => BitConverter.ToUInt16(ReadBytes(offset, 2), 0);
 
+		/// <summary>
+		/// Read a float from the specified offset.
+		/// </summary>
+		/// <param name="offset">Offset to read from.</param>
+		/// <returns>Read Float.</returns>
+		public float ReadFloat(ulong offset) => BitConverter.ToSingle(ReadBytes(offset, 4), 0);
+
         /// <summary>
         /// Read a string from the specified offset.
         /// </summary>
