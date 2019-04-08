@@ -406,10 +406,11 @@ namespace Nhaama.Memory
 
 		#region Miscellaneous
 
-		public IntPtr CreateRemoteThread(IntPtr address)
+		public IntPtr CreateRemoteThread(IntPtr address, out IntPtr threadId)
 		{
-			Kernel32.CreateRemoteThread(BaseProcess.Handle, IntPtr.Zero, 0, address, IntPtr.Zero, 0, out IntPtr ret);
-			return ret;
+			var ret = Kernel32.CreateRemoteThread(BaseProcess.Handle, IntPtr.Zero, 0, address, IntPtr.Zero, 0, out IntPtr thread);
+            threadId = thread;
+            return ret;
 		}
 
 		/// <summary>
