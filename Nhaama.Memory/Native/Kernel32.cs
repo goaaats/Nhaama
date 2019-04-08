@@ -54,7 +54,7 @@ namespace Nhaama.Memory.Native
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         public static extern int WaitForSingleObject(
             IntPtr handle,
-            int milliseconds
+            UInt32 milliseconds
         );
 
         [DllImport("kernel32.dll")]
