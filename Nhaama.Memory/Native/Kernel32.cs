@@ -9,8 +9,17 @@ namespace Nhaama.Memory.Native
     {
         #region General
         
-        [DllImport("kernel32.dll")]
-        public static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
+        [DllImport("kernel32.dll", EntryPoint = "GetSystemInfo")]
+        public static extern void Native_GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
+
+		public static SYSTEM_INFO GetSystemInfo()
+		{
+			SYSTEM_INFO retVal = new SYSTEM_INFO();
+
+			Native_GetSystemInfo(out retVal);
+
+			return retVal;
+		}
 
         #endregion
 
@@ -45,7 +54,7 @@ namespace Nhaama.Memory.Native
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
         public static extern int WaitForSingleObject(
             IntPtr handle,
-            int milliseconds
+            UInt32 milliseconds
         );
 
         [DllImport("kernel32.dll")]
@@ -69,11 +78,11 @@ namespace Nhaama.Memory.Native
         #region Memory
 
         [DllImport("kernel32.dll", EntryPoint = "VirtualQueryEx")]
-        public static extern UIntPtr Native_VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress,
+        public static extern int Native_VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress,
             out MEMORY_BASIC_INFORMATION32 lpBuffer, UIntPtr dwLength);
 
         [DllImport("kernel32.dll", EntryPoint = "VirtualQueryEx")]
-        public static extern UIntPtr Native_VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress,
+        public static extern int Native_VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress,
             out MEMORY_BASIC_INFORMATION64 lpBuffer, UIntPtr dwLength);
 
         [DllImport("kernel32.dll")]
@@ -110,10 +119,10 @@ namespace Nhaama.Memory.Native
             uint flProtect
         );
 
-        public static UIntPtr VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress,
+        public static int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress,
             out MEMORY_BASIC_INFORMATION lpBuffer, bool x64)
         {
-            UIntPtr retVal;
+            int retVal;
 
             if (x64)
             {
@@ -148,6 +157,21 @@ namespace Nhaama.Memory.Native
             return retVal;
         }
 
-        #endregion
-    }
+		#endregion
+
+		#region Threads
+
+		[DllImport("kernel32.dll")]
+		public static extern IntPtr CreateRemoteThread(
+			IntPtr hProcess,
+			IntPtr lpThreadAttributes, 
+			uint dwStackSize, 
+			IntPtr lpStartAddress,
+			IntPtr lpParameter, 
+			uint dwCreationFlags, 
+			out IntPtr lpThreadId
+		);
+
+		#endregion
+	}
 }

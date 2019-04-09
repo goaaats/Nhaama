@@ -23,6 +23,7 @@ namespace Nhaama.FFXIV
         public readonly ActorTableCollection ActorTable;
 
         public int TerritoryType { get; private set; }
+		public int MapID { get; private set; }
 
         public Game(Process process)
         {
@@ -50,6 +51,9 @@ namespace Nhaama.FFXIV
 
             Definitions.TerritoryType.Resolve(Process);
             TerritoryType = Process.ReadUInt16(Definitions.TerritoryType);
+
+			Definitions.MapID.Resolve(Process);
+			MapID = Process.ReadUInt16(Definitions.MapID);
         }
     }
 }
