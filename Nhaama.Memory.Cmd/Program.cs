@@ -63,6 +63,15 @@ namespace Nhaama.Memory.Cmd
             
             //Console.WriteLine(Definitions.GetJson(proc));
 
+            var handles = proc.GetHandles();
+            foreach (var nhaamaHandle in handles)
+            {
+                Console.WriteLine(nhaamaHandle);
+                if(nhaamaHandle.Name.Contains("ffxiv_game0"))
+                    nhaamaHandle.Close();
+            }
+
+            /*
             FFXIV.Game xivgame = new Game(proc.BaseProcess);
             xivgame.Update();
             
@@ -70,6 +79,7 @@ namespace Nhaama.Memory.Cmd
             {
                 Console.WriteLine(actorEntry);
             }
+            */
         }
     }
 }

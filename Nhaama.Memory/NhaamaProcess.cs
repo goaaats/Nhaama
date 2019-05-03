@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using Nhaama.Memory.Native;
+using Nhaama.Memory.Native.Enums;
 using Nhaama.Memory.Native.Structs;
 using Nhaama.Memory.Serialization;
 
@@ -291,7 +293,10 @@ namespace Nhaama.Memory
 				if (!Kernel32.VirtualFreeEx(BaseProcess.Handle, new IntPtr((long)address), UIntPtr.Zero, Constants.MEM_RELEASE))
 					throw new Exception("Memory could not be freed at " + address);
 			}
-			catch (Exception) {}
+			catch (Exception)
+			{
+				// ignored
+			}
 		}
 
 		/// <summary>
@@ -402,6 +407,87 @@ namespace Nhaama.Memory
 			return result; // maybe not a good idea not sure
 		}
 
+		#endregion
+		
+		#region Handles
+
+		public NhaamaHandle[] GetHandles()
+		{
+			var handles = new List<NhaamaHandle>();
+			
+			var nHandleInfoSize = 0x10000;
+			var ipHandlePointer = Marshal.AllocHGlobal(nHandleInfoSize);
+			var nLength = 0;
+			IntPtr ipHandle;
+
+			while ((NtDll.NtQuerySystemInformation(SYSTEM_INFORMATION_CLASS.SystemHandleInformation, ipHandlePointer, nHandleInfoSize, ref nLength)) == NtStatus.InfoLengthMismatch)
+			{
+				nHandleInfoSize = nLength;
+				Marshal.FreeHGlobal(ipHandlePointer);
+				ipHandlePointer = Marshal.AllocHGlobal(nLength);
+			}
+
+			byte[] baTemp = new byte[nLength];
+			Marshal.Copy(ipHandlePointer, baTemp, 0, nLength);
+
+			long lHandleCount;
+			if (Is64BitProcess())
+			{
+				lHandleCount = Marshal.ReadInt64(ipHandlePointer);
+				ipHandle = new IntPtr(ipHandlePointer.ToInt64() + 8);
+			}
+			else
+			{
+				lHandleCount = Marshal.ReadInt32(ipHandlePointer);
+				ipHandle = new IntPtr(ipHandlePointer.ToInt32() + 4);
+			}
+
+			SYSTEM_HANDLE_INFORMATION shHandle;
+
+			List<SYSTEM_HANDLE_INFORMATION> test = new List<SYSTEM_HANDLE_INFORMATION>();
+			
+			for (long lIndex = 0; lIndex < lHandleCount; lIndex++)
+			{
+				shHandle = new SYSTEM_HANDLE_INFORMATION();
+				if (Is64BitProcess())
+				{
+					shHandle = (SYSTEM_HANDLE_INFORMATION)Marshal.PtrToStructure(ipHandle, shHandle.GetType());
+					ipHandle = new IntPtr(ipHandle.ToInt64() + Marshal.SizeOf(shHandle) + 8);
+				}
+				else
+				{
+					ipHandle = new IntPtr(ipHandle.ToInt64() + Marshal.SizeOf(shHandle));
+					shHandle = (SYSTEM_HANDLE_INFORMATION)Marshal.PtrToStructure(ipHandle, shHandle.GetType());
+				}
+				if (shHandle.ProcessID != BaseProcess.Id) 
+					continue;
+
+				try
+				{
+					test.Add(shHandle);
+				}
+				catch
+				{
+					// ignored
+				}
+			}
+
+			foreach (var systemHandleInformation in test)
+			{
+				try
+				{
+					handles.Add(new NhaamaHandle(new IntPtr(systemHandleInformation.Handle), this));
+				}
+				catch
+				{
+					//ignored
+				}
+
+			}
+			
+			return handles.ToArray();
+		}
+		
 		#endregion
 
 		#region Miscellaneous
