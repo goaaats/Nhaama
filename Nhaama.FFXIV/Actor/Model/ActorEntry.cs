@@ -12,6 +12,7 @@ namespace Nhaama.FFXIV.Actor.Model
         public byte Job { get; set; }
         public byte Level { get; set; }
         public byte World { get; set; }
+        public byte HomeWorld { get; set; }
         public ObjectKind ObjectKind { get; set; }
         public byte SubKind { get; set; }
         public ActorAppearance Appearance { get; set; }

@@ -41,6 +41,7 @@ namespace Nhaama.FFXIV.Actor
                     Job = _game.Process.ReadByte(address + _game.Definitions.Job),
                     Level = _game.Process.ReadByte(address + _game.Definitions.Level),
                     World = _game.Process.ReadByte(address + _game.Definitions.World),
+                    HomeWorld = _game.Process.ReadByte(address + _game.Definitions.HomeWorld),
                     CompanyTag = _game.Process.ReadString(address + _game.Definitions.CompanyTag),
                     ObjectKind = (ObjectKind) _game.Process.ReadByte(address + _game.Definitions.ObjectKind),
                     SubKind = _game.Process.ReadByte(address + _game.Definitions.SubKind),

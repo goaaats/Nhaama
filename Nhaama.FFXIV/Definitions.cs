@@ -34,6 +34,7 @@ namespace Nhaama.FFXIV
         public ulong Job = 0x1790;
         public ulong Level = 0x1792;
         public ulong World = 0x174C;
+        public ulong HomeWorld = 0x174E;
         public ulong CompanyTag = 0x16AA;
         public ulong Customize = 0x1688;
         public ulong RenderMode = 0x104;
