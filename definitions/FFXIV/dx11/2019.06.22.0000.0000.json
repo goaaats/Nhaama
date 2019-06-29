@@ -1,8 +1,8 @@
 {
   "TerritoryType": {
     "PointerPath": [
-      ‭28731096‬,
-      ‭1632‬
+      28731096,
+      1632
     ],
     "Module": {
       "ModuleName": "ffxiv_dx11.exe"
@@ -10,11 +10,7 @@
   },
   "Time": {
     "PointerPath": [
-      27841472,
-      16,
-      8,
-      40,
-      128
+      27841472
     ],
     "Module": {
       "ModuleName": "ffxiv_dx11.exe"
@@ -22,14 +18,13 @@
   },
   "Weather": {
     "PointerPath": [
-      27665480,
-      39
+      27665480
     ],
     "Module": {
       "ModuleName": "ffxiv_dx11.exe"
     }
   },
-  "ActorTable": ‭28482368‬,
+  "ActorTable": 28482368,
   "ActorID": 116,
   "Name": 48,
   "BnpcBase": 128,
