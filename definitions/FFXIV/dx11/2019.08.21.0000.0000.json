@@ -24,6 +24,14 @@
       "ModuleName": "ffxiv_dx11.exe"
     }
   },
+  "LocalContentId": {
+    "PointerPath": [
+      28674912
+    ],
+    "Module": {
+      "ModuleName": "ffxiv_dx11.exe"
+    }
+  },
   "ActorTable": 28482368,
   "ActorID": 116,
   "Name": 48,

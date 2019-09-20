@@ -24,6 +24,8 @@ namespace Nhaama.FFXIV
 
         public int TerritoryType { get; private set; }
 
+        public ulong LocalContentId { get; private set; }
+
         public Game(Process process, bool loadRemote = true)
         {
             Type = process.MainModule.ModuleName.Contains("ffxiv_dx11") ? GameType.Dx11 : GameType.Dx9;
@@ -46,6 +48,8 @@ namespace Nhaama.FFXIV
 
             Definitions.TerritoryType.Resolve(Process);
             TerritoryType = Process.ReadUInt16(Definitions.TerritoryType);
+
+            LocalContentId = Process.ReadUInt64(Definitions.LocalContentId);
         }
     }
 }
