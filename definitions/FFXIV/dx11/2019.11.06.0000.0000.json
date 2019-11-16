@@ -1,7 +1,7 @@
 {
   "TerritoryType": {
     "PointerPath": [
-		29342264,
+		29327616,
 		10
     ],
     "Module": {
@@ -32,7 +32,7 @@
       "ModuleName": "ffxiv_dx11.exe"
     }
   },
-  "ActorTable": 29367696,
+  "ActorTable": 29347216,
   "ActorID": 116,
   "Name": 48,
   "BnpcBase": 128,
