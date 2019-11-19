@@ -2,7 +2,7 @@
   "TerritoryType": {
     "PointerPath": [
 		29327616,
-		628
+		1578
     ],
     "Module": {
       "ModuleName": "ffxiv_dx11.exe"
@@ -42,7 +42,7 @@
   "Level": 6390,
   "World": 6308,
   "HomeWorld": 6310,
-  "CompanyTag": 6150,
+  "CompanyTag": 6138,
   "Customize": 5768,
   "RenderMode": 260,
   "ObjectKind": 140,
