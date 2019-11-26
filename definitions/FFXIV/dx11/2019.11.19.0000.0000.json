@@ -1,13 +1,4 @@
 {
-  "TerritoryType": {
-    "PointerPath": [
-		29327616,
-		1578
-    ],
-    "Module": {
-      "ModuleName": "ffxiv_dx11.exe"
-    }
-  },
   "Time": {
     "PointerPath": [
       27841472
@@ -32,6 +23,7 @@
       "ModuleName": "ffxiv_dx11.exe"
     }
   },
+  "TerritoryType": 29329202,
   "ActorTable": 29347216,
   "ActorID": 116,
   "Name": 48,
