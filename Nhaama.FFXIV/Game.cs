@@ -46,9 +46,7 @@ namespace Nhaama.FFXIV
         {
             ActorTable.Update();
 
-            Definitions.TerritoryType.Resolve(Process);
-            TerritoryType = Process.ReadUInt16(Definitions.TerritoryType);
-
+            TerritoryType = Process.ReadUInt16(Process.GetModuleBasedOffset("ffxiv_dx11.exe", Definitions.TerritoryType));
             LocalContentId = Process.ReadUInt64(Definitions.LocalContentId);
         }
     }
