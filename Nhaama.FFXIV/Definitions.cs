@@ -13,6 +13,7 @@ namespace Nhaama.FFXIV
             Time = new Pointer(process, 0x1A8D3C0);
             Weather = new Pointer(process, 0x1A62448);
             LocalContentId = new Pointer(process, 0x1B58B60);
+            TerritoryType = new Pointer(process, 0x1CB2E70, 0x12);
         }
         
         [JsonConstructor]
@@ -22,7 +23,7 @@ namespace Nhaama.FFXIV
         public Pointer Weather;
         public Pointer LocalContentId;
 
-        public ulong TerritoryType = 0x1BF8732;
+        public Pointer TerritoryType;
 
         public ulong ActorTable = 0x1AA97B8;
 
