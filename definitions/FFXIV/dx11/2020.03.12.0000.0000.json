@@ -25,7 +25,7 @@
   },
   "TerritoryType": {
     "PointerPath": [
-	  30092784,
+	  30096880,
 	  18
 	],
 	"Module": {
@@ -33,7 +33,7 @@
 	}
   },
   
-  "ActorTable": 29761944,
+  "ActorTable": 29766040,
   "ActorID": 116,
   "Name": 48,
   "BnpcBase": 128,
